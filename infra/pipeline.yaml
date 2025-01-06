@@ -1,0 +1,42 @@
+resources:
+  - name: resourcegroup
+    plan: true
+    apply: true
+    depends_on: []
+  - name: network
+    plan: true
+    apply: true
+    depends_on:
+      - resourcegroup
+  - name: privatednszone
+    plan: true
+    apply: true
+    depends_on:
+      - network
+  - name: keyvault
+    plan: true
+    apply: true
+    depends_on: 
+      - network
+  - name: storage-adls
+    plan: true
+    apply: true
+    depends_on:
+      - keyvault
+  - name: datafactory
+    plan: true
+    apply: true
+    depends_on:
+      - keyvault
+  - name: mssqlserverless
+    plan: true
+    apply: true
+    depends_on:
+      - network
+  - name: privateendpoint
+    plan: true
+    apply: true
+    depends_on:
+      - storage-adls
+      - keyvault
+
