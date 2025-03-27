@@ -12,7 +12,10 @@
     margin-left: 16px;
     color: #f7594e;
   }
-  background: white;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  backdrop-filter: blur(6px);
+
   img {
     width: 100px;
     height: 100px;
