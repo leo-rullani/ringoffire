@@ -52,3 +52,24 @@
   right: 32px;
   bottom: 32px;
 }
+
+.pin-bottom {
+  position: absolute;
+  left: 400px;
+  right: 400px;
+  bottom: 32px;
+  padding: 24px;
+}
+
+::ng-deep .mat-mdc-card-title {
+  margin-left: 16px !important;
+}
+
+::ng-deep .mat-mdc-button .mdc-button__label,
+.mat-mdc-unelevated-button .mdc-button__label,
+.mat-mdc-raised-button .mdc-button__label,
+.mat-mdc-outlined-button .mdc-button__label {
+  z-index: 1;
+  margin-left: 16px !important;
+
+}
