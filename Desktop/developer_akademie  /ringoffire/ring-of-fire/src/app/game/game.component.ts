@@ -7,6 +7,7 @@ import {
   Firestore,
   collection,
   collectionData,
+  addDoc
 } from '@angular/fire/firestore'; // 🔥 ALLES AUS @angular/fire/firestore
 
 @Component({
@@ -33,7 +34,8 @@ export class GameComponent implements OnInit {
 
   newGame() {
     this.game = new Game();
-    console.log(this.game);
+    const gamesCollection = collection(this.firestore, 'games');
+    addDoc(gamesCollection, { ...this.game });
   }
 
   takeCard() {
