@@ -10,6 +10,7 @@
 
 .card-stack {
   position: relative;
+
   img {
     position: absolute;
     width: 120px;
@@ -41,23 +42,33 @@
   }
 }
 
-
+/* Spieler-Balken */
 .player-position {
+  /* Rechts positioniert, zentriert über die Höhe */
   position: absolute;
   right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+
+  /* Vertikale Schreibrichtung (Text von oben nach unten).
+     'vertical-rl' dreht es um 90°, 'sideways' kippt die Buchstaben. */
+  writing-mode: vertical-rl;
+  text-orientation: sideways;
 }
 
+/* Plus-Button */
 .btn-add {
   position: absolute;
   right: 32px;
   bottom: 32px;
 }
 
+/* Weißer Balken unten - als „Footer“ */
 .pin-bottom {
   position: absolute;
-  left: 100px;
-  right: 100px;
-  bottom: 32px;
+  left: 0;
+  right: 0;
+  bottom: 0;
 }
 
 ::ng-deep .mat-mdc-card-title {
@@ -70,5 +81,53 @@
 .mat-mdc-outlined-button .mdc-button__label {
   z-index: 1;
   margin-left: 16px !important;
+}
 
+/* ----------------------------------
+   MEDIA QUERIES / RESPONSIVE
+   ---------------------------------- */
+
+/* Größere Tablets (z. B. max-width: 960px)
+   Deaktiviert ggf. Scrollen, falls gewünscht */
+@media (max-width: 960px) {
+  .field {
+    /* Falls du Scrollen generell unterbinden willst: */
+    overflow: hidden;
+  }
+}
+
+/* Kleinere Tablets / Smartphones (z.B. max-width: 720px) */
+@media (max-width: 720px) {
+  /* Karten minimal verkleinern */
+  .card-stack img {
+    width: 100px;
+  }
+
+  /* Weißer Balken unten etwas kleiner */
+  .pin-bottom {
+    min-height: 150px;
+  }
+}
+
+/* Smartphones (z. B. max-width: 480px) */
+@media (max-width: 480px) {
+  .card-stack img {
+    width: 80px;
+  }
+
+  /* Spieler-Balken noch kleiner */
+  .player-position {
+    font-size: 0.8rem;
+  }
+}
+
+/* Sehr kleine Smartphones (z. B. max-width: 320px) */
+@media (max-width: 320px) {
+  .card-stack img {
+    width: 60px;
+  }
+
+  .player-position {
+    font-size: 0.7rem;
+  }
 }
