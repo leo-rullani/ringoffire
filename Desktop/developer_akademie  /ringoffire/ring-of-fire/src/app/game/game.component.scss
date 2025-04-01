@@ -49,10 +49,6 @@
   right: 0;
   top: 50%;
   transform: translateY(-50%);
-
-  /* Vertikale Schreibrichtung (Text von oben nach unten).
-     'vertical-rl' dreht es um 90°, 'sideways' kippt die Buchstaben. */
-  writing-mode: vertical-rl;
   text-orientation: sideways;
 }
 
