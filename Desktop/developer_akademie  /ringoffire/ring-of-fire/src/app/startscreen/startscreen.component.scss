@@ -6,6 +6,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
   img {
     height: 100vh;
     width: 100vw;
@@ -18,7 +19,7 @@
   right: 0;
   display: flex;
   justify-content: center;
-  bottom: 0 px;
+  bottom: 0px; // Korrigiert von "0 px" auf "0px"
 
   img {
     width: 60vw;
@@ -52,5 +53,83 @@
     font-size: 3rem;
     color: #ffcccc;
     text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
+  }
+}
+
+/* -------------------------------------------
+   MEDIA QUERIES
+   ------------------------------------------- */
+
+/* Beispiel: bis 768px Bildschirmbreite */
+@media (max-width: 768px) {
+  .start-label-box img {
+    width: 80vw;
+  }
+
+  .start-title {
+    top: 30px;
+    left: 20px;
+
+    h1 {
+      font-size: 4rem;
+    }
+
+    p {
+      font-size: 2rem;
+    }
+  }
+}
+
+/* Beispiel: bis 480px Bildschirmbreite */
+@media (max-width: 480px) {
+  .start-screen img {
+    height: auto;
+    width: 100%;
+  }
+
+  .start-label-box img {
+    width: 90vw;
+  }
+
+  .start-title {
+    top: 20px;
+    left: 10px;
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1.2rem;
+    }
+  }
+}
+
+/* Beispiel: bis 320px Bildschirmbreite */
+@media (max-width: 320px) {
+  .start-screen {
+    height: auto;
+  }
+
+  .start-screen img {
+    width: 100%;
+    height: auto;
+  }
+
+  .start-label-box img {
+    width: 95vw;
+  }
+
+  .start-title {
+    top: 10px;
+    left: 5px;
+
+    h1 {
+      font-size: 2rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
   }
 }
