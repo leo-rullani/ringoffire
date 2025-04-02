@@ -110,10 +110,34 @@
   .card-stack img {
     width: 80px;
   }
-
-  /* Spieler-Balken noch kleiner */
   .player-position {
     font-size: 0.8rem;
+  }
+}
+
+/* max-width: 370px (z. B. bestimmte Zwischengröße) */
+@media (max-width: 370px) {
+  .pick-card {
+    animation: pick-card-animation-sm 1s ease-in-out forwards;
+  }
+
+  .played-card {
+    right: 80px;
+  }
+
+  @keyframes pick-card-animation-sm {
+    0% {
+      transform: scale(1);
+    }
+    40% {
+      transform: scale(1.7);
+    }
+    60% {
+      transform: scale(1.7);
+    }
+    100% {
+      transform: scale(1.3) translateX(90px) translateY(-180px) rotate(-10deg);
+    }
   }
 }
 
@@ -122,7 +146,6 @@
   .card-stack img {
     width: 60px;
   }
-
   .player-position {
     font-size: 0.7rem;
   }
