@@ -56,7 +56,9 @@ export class GameComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(DialogAddPlayerComponent);
+    const dialogRef = this.dialog.open(DialogAddPlayerComponent, {
+      autoFocus: true // stellt sicher, dass der Fokus NICHT auf dem Button bleibt
+    });
 
     dialogRef.afterClosed().subscribe((name) => {
       if (name && name.length > 0) {

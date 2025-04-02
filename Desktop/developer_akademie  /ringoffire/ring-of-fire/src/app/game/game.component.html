@@ -1,22 +1,59 @@
-<app-player *ngFor="let player of game.players; let i = index;" [ngStyle]= "{'top.px': 100 + (i * 90)}"
-[playerActive]="i == game.currentPlayer" [name]= "player" class="player-position"></app-player>
+<!-- Spieleranzeige -->
+<app-player
+  *ngFor="let player of game.players; let i = index;"
+  [ngStyle]="{'top.px': 100 + (i * 90)}"
+  [playerActive]="i == game.currentPlayer"
+  [name]="player"
+  class="player-position">
+</app-player>
 
-<div class = "field">
-
+<!-- Spielfeld -->
+<div class="field">
   <div class="card-stack">
-    <!-- Card stack -->
-    <img *ngFor= "let c of [0,1,2,3]; let i = index;" [ngStyle]= "{'right.px': i * 5}" src="/assets/img/cards/card_cover.png">
-    <img (click)="takeCard()" class ="top-card" style="right: 25px" src="/assets/img/cards/card_cover.png">
+    <!-- Karten-Stapel -->
+    <img
+      *ngFor="let c of [0,1,2,3]; let i = index;"
+      [ngStyle]="{'right.px': i * 5}"
+      src="/assets/img/cards/card_cover.png"
+    >
+    <img
+      (click)="takeCard()"
+      class="top-card"
+      style="right: 25px"
+      src="/assets/img/cards/card_cover.png"
+    >
 
-    <!-- Stack for played cards -->
-    <img *ngFor="let card of game.playedCards" class="played-card" src="/assets/img/cards/{{ card }}.png">
-    <!-- Current card animation -->
-    <img (click)="takeCard()" *ngIf="pickCardAnimation" class ="pick-card" style="right: 25px" src="/assets/img/cards/{{ currentCard }}.png">
+    <!-- Gespielte Karten -->
+    <img
+      *ngFor="let card of game.playedCards"
+      class="played-card"
+      src="/assets/img/cards/{{ card }}.png"
+    >
+
+    <!-- Aktuelle Karte beim Ziehen -->
+    <img
+      *ngIf="pickCardAnimation"
+      (click)="takeCard()"
+      class="pick-card"
+      style="right: 25px"
+      src="/assets/img/cards/{{ currentCard }}.png"
+    >
   </div>
 </div>
 
-<app-game-info [card]="currentCard" class="pin-bottom"></app-game-info>
+<!-- Weiße Info-Karte -->
+<app-game-info
+  [card]="currentCard"
+  class="pin-bottom">
+</app-game-info>
 
-<button mat-fab aria-label="Example icon button with a delete icon" (click)="openDialog()" class="btn-add">
+<!-- Plus-Button -->
+<!-- WICHTIG: tabindex="-1" verhindert, dass der Button beim Öffnen des Dialogs den Fokus behält -->
+<button
+  mat-fab
+  aria-label="Neuen Spieler hinzufügen"
+  (click)="openDialog()"
+  class="btn-add"
+  tabindex="-1">
   <mat-icon>add</mat-icon>
 </button>
