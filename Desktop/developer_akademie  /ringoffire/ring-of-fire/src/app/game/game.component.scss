@@ -10,7 +10,6 @@
 
 .card-stack {
   position: relative;
-
   img {
     position: absolute;
     width: 120px;
@@ -44,12 +43,21 @@
 
 /* Spieler-Balken */
 .player-position {
-  /* Rechts positioniert, zentriert über die Höhe */
   position: absolute;
   right: 0;
   top: 50%;
   transform: translateY(-50%);
   text-orientation: sideways;
+}
+
+/* NEU: Spieler in Blau hervorheben, wenn [playerActive]="true" */
+.player-position[playerActive="true"] {
+  /* Beispiel-Styling: Hintergrund blau + weiße Schrift */
+  background-color: #2196f3;
+  color: #fff;
+  padding: 8px 12px;
+  border-radius: 8px;
+  /* Passe Werte nach Geschmack an */
 }
 
 /* Plus-Button */
@@ -83,29 +91,24 @@
    MEDIA QUERIES / RESPONSIVE
    ---------------------------------- */
 
-/* Größere Tablets (z. B. max-width: 960px)
-   Deaktiviert ggf. Scrollen, falls gewünscht */
+/* max-width: 960px */
 @media (max-width: 960px) {
   .field {
-    /* Falls du Scrollen generell unterbinden willst: */
-    overflow: hidden;
+    overflow: hidden; /* nur wenn du kein Scrollen willst */
   }
 }
 
-/* Kleinere Tablets / Smartphones (z.B. max-width: 720px) */
+/* max-width: 720px */
 @media (max-width: 720px) {
-  /* Karten minimal verkleinern */
   .card-stack img {
     width: 100px;
   }
-
-  /* Weißer Balken unten etwas kleiner */
   .pin-bottom {
     min-height: 150px;
   }
 }
 
-/* Smartphones (z. B. max-width: 480px) */
+/* max-width: 480px */
 @media (max-width: 480px) {
   .card-stack img {
     width: 80px;
@@ -115,16 +118,14 @@
   }
 }
 
-/* max-width: 370px (z. B. bestimmte Zwischengröße) */
+/* max-width: 370px */
 @media (max-width: 370px) {
   .pick-card {
     animation: pick-card-animation-sm 1s ease-in-out forwards;
   }
-
   .played-card {
     right: 80px;
   }
-
   @keyframes pick-card-animation-sm {
     0% {
       transform: scale(1);
@@ -141,7 +142,7 @@
   }
 }
 
-/* Sehr kleine Smartphones (z. B. max-width: 320px) */
+/* max-width: 320px */
 @media (max-width: 320px) {
   .card-stack img {
     width: 60px;
