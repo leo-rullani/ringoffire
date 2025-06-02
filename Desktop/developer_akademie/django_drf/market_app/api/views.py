@@ -3,25 +3,55 @@
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework import status
-from .serializers import MarketSerializer, SellerSerializer, MarketHyperlinkedSerializer
-from market_app.models import Market, Seller
-from rest_framework.views import APIView
-from rest_framework import mixins
-from rest_framework import generics
+from django.shortcuts import get_object_or_404
+
+from .serializers import ProductSerializer, MarketSerializer, SellerSerializer, MarketHyperlinkedSerializer, SellerListSerializer
+from market_app.models import Market, Seller, Product
+from rest_framework import mixins, generics
+from rest_framework import viewsets
+
+
+class ProductViewSet(viewsets.ViewSet):
+    queryset = Product.objects.all()
+    
+    def list(self, request):
+        serializer = ProductSerializer(self.queryset, many = True)
+        return Response(serializer.data)
+    
+    def retrieve(self, request, pk=None):
+        user = get_object_or_404(self.queryset, pk=pk)
+        serializer = ProductSerializer(user)
+        return Response(serializer.data)
+
+
+
+
+
+
 
 
 class MarketsView(generics.ListCreateAPIView):
+    queryset = Market.objects.all()
+    serializer_class = MarketSerializer
     
+class MarketSingleView(generics.RetrieveUpdateDestroyAPIView):
     queryset = Market.objects.all()
     serializer_class = MarketSerializer
 
-    # def get(self, request, *args, **kwargs):
-    #   return self.list(request, *args, **kwargs)
+class SellerOfMarketList(generics.ListCreateAPIView):
+    serializer_class = SellerListSerializer
     
-    # def post(self, request, *args, **kwargs):
-    #     return self.create(request, *args, **kwargs)
-
-
+    def get_queryset(self):
+        pk = self.kwargs.get('pk')
+        market = get_object_or_404(Market, pk=pk)
+        return market.sellers.all()
+    
+    def perform_create(self, serializer):
+        pk = self.kwargs.get('pk')
+        market = Market.objects.get(pk=pk)
+        serializer.save(market=market)    
+    
+    
 class MarketDetailView(mixins.RetrieveModelMixin,
                        mixins.UpdateModelMixin,
                        mixins.DestroyModelMixin,
@@ -32,7 +62,6 @@ class MarketDetailView(mixins.RetrieveModelMixin,
     - PUT    -> UpdateModelMixin
     - DELETE -> DestroyModelMixin
     """
-
     queryset = Market.objects.all()
     serializer_class = MarketSerializer
 
@@ -72,12 +101,12 @@ def markets_view(request):
 def market_single_view(request, pk):
 
     if request.method == 'GET':
-        market = Market.objects.get(pk=pk)
+        market = get_object_or_404(Market, pk=pk)
         serializer = MarketSerializer(market, context={'request': request})
         return Response(serializer.data)
     
     if request.method == 'PUT':
-        market = Market.objects.get(pk=pk)
+        market = get_object_or_404(Market, pk=pk)
         serializer = MarketSerializer(market, data=request.data, partial=True, context={'request': request})
         if serializer.is_valid():
             serializer.save()
@@ -87,7 +116,7 @@ def market_single_view(request, pk):
         
     
     if request.method == 'DELETE':
-        market = Market.objects.get(pk=pk)
+        market = get_object_or_404(Market, pk=pk)
         serializer = MarketSerializer(market, context={'request': request})
         market.delete()
         return Response(serializer.data)
@@ -96,7 +125,7 @@ def market_single_view(request, pk):
 @api_view()
 def sellers_single_view(request, pk):
     if request.method == 'GET':
-        seller = Seller.objects.get(pk=pk)
+        seller = get_object_or_404(Seller, pk=pk)
         serializer = SellerSerializer(seller, context={'request': request})
         return Response(serializer.data)
     

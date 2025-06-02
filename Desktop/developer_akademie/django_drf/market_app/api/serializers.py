@@ -1,5 +1,13 @@
 from rest_framework import serializers
-from market_app.models import Market, Seller
+from market_app.models import Market, Seller, Product
+
+
+
+class ProductSerializer(serializers.ModelSerializer):
+        class Meta:
+            model = Product
+            exclude = '__all__'
+    
 
 class MarketSerializer(serializers.ModelSerializer):
     sellers = serializers.HyperlinkedRelatedField(
@@ -58,3 +66,9 @@ class SellerSerializer(serializers.ModelSerializer):
 
     def get_market_count(self, obj):
         return obj.markets.count()
+    
+class SellerListSerializer(SellerSerializer, serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Seller
+        fields = ["url", "id", "name", "market_ids", "market_count", "contact_info"]
+    
