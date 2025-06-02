@@ -1,20 +1,44 @@
 from rest_framework import serializers
-from market_app.models import Market
+from market_app.models import Market, Seller
 
-class MarketSerializer(serializers.Serializer):
-    id = serializers.IntegerField(read_only=True)
-    name = serializers.CharField(max_length=255)
-    location = serializers.CharField(max_length=255)
-    description = serializers.CharField()
-    net_worth = serializers.DecimalField(max_digits=100, decimal_places=2)
-    
-    def create(self, validated_data): 
-        return Market.objects.create(**validated_data)
-    
-    def update(self, instance, validated_data):
-        instance.name = validated_data.get('name', instance.name)
-        instance.location = validated_data.get('location', instance.location)
-        instance.description = validated_data.get('description', instance.description)
-        instance.net_worth = validated_data.get('net_worth', instance.net_worth)
-        instance.save()
-        return instance
+class MarketSerializer(serializers.ModelSerializer):
+    sellers = serializers.HyperlinkedRelatedField(
+        many=True,
+        read_only=True,
+        view_name='seller_single'
+    )
+
+    class Meta:
+        model = Market
+        exclude = []
+
+    def validate_name(self, value):
+        errors = []
+
+        if 'X' in value:
+            errors.append('no X in location')
+        if 'Y' in value:
+            errors.append('no Y in location')
+
+        if errors:
+            raise serializers.ValidationError(errors)
+
+        return value
+
+
+class SellerSerializer(serializers.ModelSerializer):
+    markets = serializers.StringRelatedField(many=True)
+    market_ids = serializers.PrimaryKeyRelatedField(
+        queryset=Market.objects.all(),
+        many=True,
+        write_only=True,
+        source='markets'
+    )
+    market_count = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Seller
+        fields = ["id", "name", "market_ids", "market_count", "markets", "contact_info"]
+
+    def get_market_count(self, obj):
+        return obj.markets.count()
