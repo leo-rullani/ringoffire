@@ -7,28 +7,14 @@ from django.shortcuts import get_object_or_404
 
 from .serializers import ProductSerializer, MarketSerializer, SellerSerializer, MarketHyperlinkedSerializer, SellerListSerializer
 from market_app.models import Market, Seller, Product
-from rest_framework import mixins, generics
-from rest_framework import viewsets
+from rest_framework import mixins, generics, viewsets
 
+class ListRetrieveViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.GenericViewSet):
+    pass
 
-class ProductViewSet(viewsets.ViewSet):
+class ProductViewSet(ListRetrieveViewSet):
     queryset = Product.objects.all()
-    
-    def list(self, request):
-        serializer = ProductSerializer(self.queryset, many = True)
-        return Response(serializer.data)
-    
-    def retrieve(self, request, pk=None):
-        user = get_object_or_404(self.queryset, pk=pk)
-        serializer = ProductSerializer(user)
-        return Response(serializer.data)
-
-
-
-
-
-
-
+    serializer_class = ProductSerializer
 
 class MarketsView(generics.ListCreateAPIView):
     queryset = Market.objects.all()
