@@ -6,7 +6,7 @@ urlpatterns = [
     path('market/', markets_view, name='market_list'),
 
     # Detail-Endpunkt für einen einzelnen Market (mit Slash und Name)
-    path('market/<int:pk>/', market_single_view, name='market_single'),
+    path('market/<int:pk>/', market_single_view, name='market-detail'),
 
     # List- und Create-Endpunkt für Sellers
     path('seller/', sellers_view, name='seller_list'),
